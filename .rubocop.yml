@@ -1,10 +1,15 @@
 AllCops:
+  NewCops: disable
+  SuggestExtensions: false
   Exclude:
     - db/**/*
     - config/**/*
     - node_modules/**/*
     - bin/*
     - vendor/**/*
+
+Layout/EndOfLine:
+   Enabled: False
 
 Bundler/OrderedGems:
   Enabled: false
@@ -99,7 +104,7 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   CountComments: true  # count full line comments?
   Max: 40
-  ExcludedMethods: [elastic_query_parameters, parameters]
+  AllowedMethods: [elastic_query_parameters, parameters]
   Exclude:
     - "spec/**/*"
     - "db/migrate/*"
@@ -413,7 +418,7 @@ Style/WordArray:
 Style/MethodCallWithArgsParentheses:
   Description: 'Use parentheses for method calls with arguments.'
   Enabled: true
-  IgnoredMethods:
+  AllowedMethods:
     - require
     - require_relative
     - raise

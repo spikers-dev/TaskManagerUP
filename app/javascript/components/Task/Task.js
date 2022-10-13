@@ -6,14 +6,23 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
+import { IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+
 import useStyles from './useStyles';
 
-function Task({ task }) {
+function Task({ task, onClick }) {
   const styles = useStyles();
+  const handleClick = () => onClick(task);
+  const action = (
+    <IconButton onClick={handleClick}>
+      <EditIcon />
+    </IconButton>
+  );
 
   return (
     <Card className={styles.root}>
-      <CardHeader title={task.name} />
+      <CardHeader action={action} title={task.name} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {task.description}
@@ -25,6 +34,7 @@ function Task({ task }) {
 
 Task.propTypes = {
   task: PropTypes.shape().isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Task;

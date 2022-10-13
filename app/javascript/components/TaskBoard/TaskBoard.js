@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import KanbanBoard from '@asseinfo/react-kanban';
 import { propOr } from 'ramda';
 
-import Task from 'components/Task';
+import ColumnHeader from '../ColumnHeader';
 import TasksRepository from 'repositories/TasksRepository';
 import '@asseinfo/react-kanban/dist/styles.css';
 
@@ -36,6 +36,15 @@ function TaskBoard() {
       perPage,
     });
 
+  const loadColumnMore = (state, page = 1, perPage = 10) => {
+    loadColumn(state, page, perPage).then(({ data }) => {
+      setBoardCards((prevState) => ({
+        ...prevState,
+        [state]: { cards: [...prevState[state].cards, ...data.items], meta: data.meta },
+      }));
+    });
+  };
+
   const loadColumnInitial = (state, page = 1, perPage = 10) => {
     loadColumn(state, page, perPage).then(({ data }) => {
       setBoardCards((prevState) => ({
@@ -65,7 +74,10 @@ function TaskBoard() {
   useEffect(() => generateBoard(), [boardCards]);
 
   return (
-    <KanbanBoard disableColumnDrag renderCard={(card) => <Task task={card} />}>
+    <KanbanBoard
+      disableColumnDrag
+      renderColumnHeader={(column) => <ColumnHeader column={column} onLoadMore={loadColumnMore} />}
+    >
       {board}
     </KanbanBoard>
   );

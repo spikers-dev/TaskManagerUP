@@ -1,5 +1,6 @@
 class Api::V1::ApplicationController < Api::ApplicationController
   RANSACK_DEFAULT_SORT = 'id ASC'.freeze
+  respond_to :json
 
   def build_meta(collection)
     {

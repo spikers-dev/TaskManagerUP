@@ -2,15 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { has } from 'ramda';
 
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
+import { Button, Card, CardActions, CardContent, CardHeader, IconButton, Modal, TextField } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
 
 import TaskForm from 'forms/TaskForm';
 
@@ -20,6 +13,7 @@ function AddPopup({ onClose, onCreateCard }) {
   const [task, changeTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
+
   const handleCreate = () => {
     setSaving(true);
 

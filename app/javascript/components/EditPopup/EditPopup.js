@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isNil } from 'ramda';
 
-import Form from './components/Form';
-
 import {
   Button,
   Card,
@@ -14,8 +12,9 @@ import {
   IconButton,
   Modal,
 } from '@material-ui/core';
-
 import CloseIcon from '@material-ui/icons/Close';
+
+import Form from './components/Form';
 
 import useStyles from './useStyles';
 

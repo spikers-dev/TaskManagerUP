@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import KanbanBoard from '@asseinfo/react-kanban';
 import { propOr } from 'ramda';
-
-import Task from 'components/Task';
-import TaskForm from 'forms/TaskForm';
-import ColumnHeader from '../ColumnHeader';
-import TasksRepository from 'repositories/TasksRepository';
-import AddPopup from '../AddPopup';
-import EditPopup from '../EditPopup';
-
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-
 import '@asseinfo/react-kanban/dist/styles.css';
+
+import Task from 'components/Task';
+import ColumnHeader from 'components/ColumnHeader';
+import AddPopup from 'components/AddPopup';
+import EditPopup from 'components/EditPopup';
+import TasksRepository from 'repositories/TasksRepository';
+import TaskForm from 'forms/TaskForm';
 import useStyles from './useStyles';
 
 const STATES = [
@@ -40,6 +38,8 @@ const initialBoard = {
   })),
 };
 
+const COLUMN_DEFAULT_SORT = 'updated_at DESC';
+
 function TaskBoard() {
   const [board, setBoard] = useState(initialBoard);
   const [boardCards, setBoardCards] = useState([]);
@@ -50,7 +50,7 @@ function TaskBoard() {
 
   const loadColumn = (state, page, perPage) =>
     TasksRepository.index({
-      q: { stateEq: state },
+      q: { stateEq: state, s: COLUMN_DEFAULT_SORT },
       page,
       perPage,
     });

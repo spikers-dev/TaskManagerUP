@@ -2,7 +2,7 @@
 
 require 'js-routes'
 
-ROUTES_DIR = File.join('app', 'javascript', 'routes')
+ROUTES_DIR = 'routes'
 API_ROUTES_FILE_NAME = 'ApiRoutes.js'
 
 namespace :js_routes do

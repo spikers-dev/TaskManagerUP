@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { has } from 'ramda';
 
-import { Button, Card, CardActions, CardContent, CardHeader, IconButton, Modal, TextField } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, CardHeader, IconButton, Modal } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-
+import Form from '../EditPopup/components/Form';
 import TaskForm from 'forms/TaskForm';
 
 import useStyles from './useStyles';
 
 function AddPopup({ onClose, onCreateCard }) {
-  const [task, changeTask] = useState(TaskForm.defaultAttributes());
+  const [task, setTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -26,7 +25,7 @@ function AddPopup({ onClose, onCreateCard }) {
       }
     });
   };
-  const handleChangeTextField = (fieldName) => (event) => changeTask({ ...task, [fieldName]: event.target.value });
+
   const styles = useStyles();
 
   return (
@@ -41,26 +40,7 @@ function AddPopup({ onClose, onCreateCard }) {
           title="Add New Task"
         />
         <CardContent>
-          <div className={styles.form}>
-            <TextField
-              error={has('name', errors)}
-              helperText={errors.name}
-              onChange={handleChangeTextField('name')}
-              value={task.name}
-              label="Name"
-              required
-              margin="dense"
-            />
-            <TextField
-              error={has('description', errors)}
-              helperText={errors.description}
-              onChange={handleChangeTextField('description')}
-              value={task.description}
-              label="Description"
-              required
-              margin="dense"
-            />
-          </div>
+          <Form errors={errors} onChange={setTask} task={task} />
         </CardContent>
         <CardActions className={styles.actions}>
           <Button disabled={isSaving} onClick={handleCreate} variant="contained" size="small" color="primary">

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { has } from 'ramda';
 
 import TextField from '@material-ui/core/TextField';
-import UserSelect from 'packs/components/UserSelect';
+import UserSelect from 'components/UserSelect';
 import TaskPresenter from 'presenters/TaskPresenter';
 
 import useStyles from './useStyles';

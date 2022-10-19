@@ -22,6 +22,8 @@ function Task({ task, onClick }) {
     </IconButton>
   );
 
+  const isExpired = () => TaskPresenter.expiredAt(task) < new Date().toISOString().slice(0, 10);
+
   return (
     <Card className={styles.root}>
       <CardHeader action={action} title={TaskPresenter.name(task)} />
@@ -29,8 +31,13 @@ function Task({ task, onClick }) {
         <Typography variant="body2" color="textSecondary" component="p">
           {TaskPresenter.description(task)}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {TaskPresenter.expired_at(task)}
+        <Typography
+          className={styles.text}
+          color={isExpired() ? 'error' : 'textSecondary'}
+          variant="body2"
+          component="p"
+        >
+          {TaskPresenter.expiredAt(task)}
         </Typography>
       </CardContent>
     </Card>

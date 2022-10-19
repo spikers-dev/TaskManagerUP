@@ -6,8 +6,8 @@ export default new PropTypesPresenter({
   name: PropTypes.string,
   description: PropTypes.string,
   state: PropTypes.string,
-  expired_at: PropTypes.string,
-  transitions: PropTypes.array,
-  author: PropTypes.object,
-  assignee: PropTypes.object,
+  expiredAt: PropTypes.string,
+  transitions: PropTypes.arrayOf(PropTypes.string),
+  author: PropTypes.number,
+  assignee: PropTypes.number,
 });

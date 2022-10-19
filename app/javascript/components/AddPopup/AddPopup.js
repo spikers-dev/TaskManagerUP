@@ -9,7 +9,7 @@ import TaskForm from 'forms/TaskForm';
 import useStyles from './useStyles';
 
 function AddPopup({ onClose, onCreateCard }) {
-  const [task, setTask] = useState(TaskForm.defaultAttributes());
+  const [task, changeTask] = useState(TaskForm.defaultAttributes());
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -40,7 +40,7 @@ function AddPopup({ onClose, onCreateCard }) {
           title="Add New Task"
         />
         <CardContent>
-          <Form errors={errors} onChange={setTask} task={task} />
+          <Form errors={errors} onChange={changeTask} task={task} />
         </CardContent>
         <CardActions className={styles.actions}>
           <Button disabled={isSaving} onClick={handleCreate} variant="contained" size="small" color="primary">

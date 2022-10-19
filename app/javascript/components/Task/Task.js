@@ -29,6 +29,9 @@ function Task({ task, onClick }) {
         <Typography variant="body2" color="textSecondary" component="p">
           {TaskPresenter.description(task)}
         </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {TaskPresenter.expired_at(task)}
+        </Typography>
       </CardContent>
     </Card>
   );

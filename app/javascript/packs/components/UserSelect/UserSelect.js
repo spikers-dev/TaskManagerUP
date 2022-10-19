@@ -11,11 +11,21 @@ import UserPresenter from 'presenters/UserPresenter';
 
 import useStyles from './useStyles';
 
+const LOAD_OPTIONS_SORT = 'first_name ASC';
+
 function UserSelect({ error, label, isClearable, isDisabled, isRequired, onChange, value, helperText }) {
   const [isFocused, setFocus] = useState(false);
   const styles = useStyles();
   const handleLoadOptions = (inputValue) =>
-    UsersRepository.index({ q: { firstNameOrLastNameCont: inputValue } }).then(({ data }) => data.items);
+    UsersRepository.index({
+      q: {
+        firstNameOrLastNameCont: inputValue,
+        typeMatches: 'Developer',
+        s: LOAD_OPTIONS_SORT,
+      },
+      page: 1,
+      per: 99,
+    }).then(({ data }) => data.items);
 
   return (
     <FormControl margin="dense" disabled={isDisabled} focused={isFocused} error={error} required={isRequired}>

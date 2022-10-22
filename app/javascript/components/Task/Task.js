@@ -13,6 +13,8 @@ import TaskPresenter from 'presenters/TaskPresenter';
 
 import useStyles from './useStyles';
 
+const CURRENT_DATE = new Date().toISOString().slice(0, 10);
+
 function Task({ task, onClick }) {
   const styles = useStyles();
   const handleClick = () => onClick(task);
@@ -22,7 +24,7 @@ function Task({ task, onClick }) {
     </IconButton>
   );
 
-  const isExpired = () => TaskPresenter.expiredAt(task) < new Date().toISOString().slice(0, 10);
+  const isExpired = () => TaskPresenter.expiredAt(task) < CURRENT_DATE;
 
   return (
     <Card className={styles.root}>
@@ -37,6 +39,7 @@ function Task({ task, onClick }) {
           variant="body2"
           component="p"
         >
+          <hr style={{ height: 5 }} />
           {TaskPresenter.expiredAt(task)}
         </Typography>
       </CardContent>

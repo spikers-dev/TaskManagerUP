@@ -1,6 +1,7 @@
 databases:
   - name: postgres
 
+previewsEnabled: true
 services:
   - type: web
     name: shpynev_taskmanager

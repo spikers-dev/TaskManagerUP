@@ -3,3 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/spikers-dev/TaskManagerUP/badge.svg?branch=develop)](https://coveralls.io/github/spikers-dev/TaskManagerUP?branch=develop)
 
 TaskManager is the visual tool that empowers your team to manage any type of project or task tracking.
+
+Deployed test project: [Task Manager](https://shpynev-taskmanager.onrender.com)
+
+email: admin@localhost.ru / password: defaultadmin

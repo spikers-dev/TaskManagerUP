@@ -145,6 +145,7 @@ GEM
     minitest (5.16.3)
     msgpack (1.6.0)
     msgpack (1.6.0-java)
+    newrelic_rpm (8.11.0)
     nio4r (2.5.8)
     nio4r (2.5.8-java)
     nokogiri (1.13.8)
@@ -338,6 +339,7 @@ DEPENDENCIES
   js-routes
   kaminari
   listen (~> 3.3)
+  newrelic_rpm
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)

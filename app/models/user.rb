@@ -6,4 +6,13 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :email, presence: true
   validates :first_name, :last_name, length: { minimum: 2 }
   validates :email, uniqueness: true, format: { with: /@/ }
+
+  def gen_password_reset_token
+    self.password_reset_token = SecureRandom.urlsafe_base64
+  end
+
+  def clear_password_reset_token!
+    self.password_reset_token = nil
+    save!
+  end
 end

@@ -1,0 +1,11 @@
+h4 Create new password
+= simple_form_for :user, method: 'put', url: password_reset_path(params[:id]) do |f|
+  p
+    = f.input :password
+    = f.input :password_confirmation
+  p
+    = f.button :submit, "OK"
+    - flash.each do |type, message|
+      .flash
+      p
+        = message

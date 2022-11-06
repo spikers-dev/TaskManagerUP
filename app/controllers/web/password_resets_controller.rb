@@ -1,32 +1,36 @@
 class Web::PasswordResetsController < Web::ApplicationController
-  def new; end
+  def new
+    @reset_password = ResetForm.new
+  end
 
   def create
-    user = User.find_by_email(params[:user][:email])
-    if user
-      user.gen_password_reset_token
-      user.password_reset_sent_at = Time.zone.now
-      user.save!
+    @reset_password = ResetForm.new(reset_password_params)
+
+    user = @reset_password.user
+    if @reset_password.valid?
+      PasswordResetService::GeneratePasswordResetToken.call(user)
       UserMailer.password_reset(user).deliver_now
-      flash[:msg] = "Instructions sent to #{params[:user][:email]}"
+      render('congratulation')
     else
-      flash[:msg] = "User with email #{params[:user][:email]} not found!"
+      render(:new)
     end
-    render(:new)
   end
 
   def edit
+    @update_form = PasswordUpdateForm.new
+
     user = User.find_by_password_reset_token!(params[:id])
-    if user.password_reset_sent_at < 1.day.ago
-      redirect_to(new_password_reset_path)
-      flash[:msg] = 'Reset token has expired.'
+    if PasswordResetService::PasswordTokenValidation.call(user)
+      render('token_expired')
     end
   end
 
   def update
+    @update_form = PasswordUpdateForm.new(password_params)
+
     user = User.find_by_password_reset_token!(params[:id])
-    if user.update(user_params)
-      user.clear_password_reset_token!
+    if user.update(password_params)
+      PasswordResetService::ResetPassword.call(user)
       redirect_to(new_session_path)
     else
       render(:edit)
@@ -35,7 +39,11 @@ class Web::PasswordResetsController < Web::ApplicationController
 
   private
 
-  def user_params
-    params.require(:user).permit(:password, :password_confirmation)
+  def password_params
+    params.require(:password_update_form).permit(:password, :password_confirmation)
+  end
+
+  def reset_password_params
+    params.require(:reset_form).permit(:email)
   end
 end

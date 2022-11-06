@@ -1,10 +1,7 @@
 h4 Forgot your password?
-= simple_form_for :user, url: password_resets_path do |f|
+= simple_form_for @reset_password, url: password_resets_path do |f|
   p
     = f.input :email
   p
     = f.button :submit, "Reset Password"
-    - flash.each do |type, message|
-      .flash
-      p
-        = message
+

@@ -6,35 +6,27 @@ class Web::PasswordResetsController < Web::ApplicationController
   def create
     @reset_password = ResetForm.new(reset_password_params)
 
+    return render(:new) unless @reset_password.valid?
+
     user = @reset_password.user
-    if @reset_password.valid?
-      PasswordResetService::GeneratePasswordResetToken.call(user)
-      UserMailer.password_reset(user).deliver_now
-      render('congratulation')
-    else
-      render(:new)
-    end
+    PasswordResetService.create_password_reset_token!(user)
+    UserMailer.password_reset(user).deliver_now
+    render('congratulation')
   end
 
   def edit
     @update_form = PasswordUpdateForm.new
 
-    user = User.find_by_password_reset_token!(params[:id])
-    if PasswordResetService::PasswordTokenValidation.call(user)
-      render('token_expired')
-    end
+    render('token_expired') if PasswordResetService.password_token_validation?(user)
   end
 
   def update
     @update_form = PasswordUpdateForm.new(password_params)
 
-    user = User.find_by_password_reset_token!(params[:id])
-    if user.update(password_params)
-      PasswordResetService::ResetPassword.call(user)
-      redirect_to(new_session_path)
-    else
-      render(:edit)
-    end
+    return render(:edit) unless user.update(password_params)
+
+    PasswordResetService.reset_password!(user)
+    redirect_to(new_session_path)
   end
 
   private
@@ -45,5 +37,9 @@ class Web::PasswordResetsController < Web::ApplicationController
 
   def reset_password_params
     params.require(:reset_form).permit(:email)
+  end
+
+  def user
+    @user ||= User.find_by_password_reset_token!(params[:id])
   end
 end

@@ -1,4 +1,6 @@
-class PasswordUpdateForm < User
+class PasswordUpdateForm
+  include ActiveModel::Model
+
   attr_accessor(
     :password,
     :password_confirmation,

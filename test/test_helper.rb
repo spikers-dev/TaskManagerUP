@@ -17,6 +17,7 @@ require 'rails/test_help'
 class ActiveSupport::TestCase
   include AuthHelper
   include FactoryBot::Syntax::Methods
+  include ActionMailer::TestHelper
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
 

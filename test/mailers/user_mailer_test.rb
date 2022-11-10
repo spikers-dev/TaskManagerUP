@@ -38,7 +38,7 @@ class UserMailerTest < ActionMailer::TestCase
     task = create(:task, author: user)
     task.destroy
 
-    params = { user: user, task: task }
+    params = { user: user, task: task.id }
     email = UserMailer.with(params).task_deleted
 
     assert_emails 1 do

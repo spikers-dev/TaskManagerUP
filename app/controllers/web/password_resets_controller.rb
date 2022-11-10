@@ -10,7 +10,7 @@ class Web::PasswordResetsController < Web::ApplicationController
 
     user = @reset_password.user
     PasswordResetService.create_password_reset_token!(user)
-    UserMailer.password_reset(user).deliver_now
+    UserMailer.password_reset(user).deliver_later
     render('congratulation')
   end
 

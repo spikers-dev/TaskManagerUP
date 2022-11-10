@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   default_url_options :host => ENV['HOST']
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?  
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+  mount Sidekiq::Web => '/admin/sidekiq'
   
   root :to => "web/boards#show"
 

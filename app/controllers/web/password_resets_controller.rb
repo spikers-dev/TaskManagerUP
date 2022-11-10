@@ -25,7 +25,7 @@ class Web::PasswordResetsController < Web::ApplicationController
 
     return render(:edit) if @update_form.invalid?
 
-    set_password
+    set_password!
     redirect_to(new_session_path)
   end
 
@@ -43,7 +43,7 @@ class Web::PasswordResetsController < Web::ApplicationController
     @user ||= User.find_by_password_reset_token!(params[:id])
   end
 
-  def set_password
+  def set_password!
     user.update(password: @update_form.password)
     PasswordResetService.reset_token!(user)
   end

@@ -19,5 +19,10 @@ module PasswordResetService
       user.password_reset_expires_at = nil
       user.save!
     end
+
+    def set_password!(user, password)
+      user.update(password)
+      reset_token!(user)
+    end
   end
 end

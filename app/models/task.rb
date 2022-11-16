@@ -3,6 +3,7 @@ class Task < ApplicationRecord
   belongs_to :assignee, class_name: 'User', optional: true
 
   has_one_attached :image
+  with_attached_image
 
   validates :name, :description, :author, presence: true
   validates :description, length: { maximum: 500 }

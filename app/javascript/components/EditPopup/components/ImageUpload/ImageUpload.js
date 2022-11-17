@@ -12,10 +12,12 @@ function ImageUpload({ onUpload }) {
   const styles = useStyles();
 
   const DEFAULT_CROP_PARAMS = {
+    unit: 'px',
     x: 0,
     y: 0,
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 100,
+    aspect: 16 / 9,
   };
 
   const [fileAsBase64, changeFileAsBase64] = useState(null);

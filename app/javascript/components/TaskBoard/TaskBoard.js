@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import KanbanBoard from '@asseinfo/react-kanban';
-import { propOr } from 'ramda';
+import { pick, propOr } from 'ramda';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import '@asseinfo/react-kanban/dist/styles.css';
 
+import { decamelize } from 'utils/keysConverter';
 import TaskPresenter from 'presenters/TaskPresenter';
 import Task from 'components/Task';
 import ColumnHeader from 'components/ColumnHeader';
@@ -146,6 +147,21 @@ function TaskBoard() {
     setMode(MODES.EDIT);
   };
 
+  const handleAttachImage = (task, image) => {
+    const pertmittedKeys = ['cropX', 'cropY', 'cropWidth', 'cropHeight'];
+
+    const body = {
+      attachment: {
+        ...decamelize(pick(pertmittedKeys, image.attachment)),
+        image: image.attachment.image,
+      },
+    };
+
+    return TasksRepository.putFormData(task.id, body);
+  };
+
+  const handleRemoveImage = (task) => TasksRepository.removeImage(task.id);
+
   useEffect(() => loadBoard(), []);
   useEffect(() => generateBoard(), [boardCards]);
 
@@ -170,6 +186,8 @@ function TaskBoard() {
           onCardDestroy={handleTaskDestroy}
           onCardUpdate={handleTaskUpdate}
           onClose={handleClose}
+          onAttachImage={handleAttachImage}
+          onRemoveImage={handleRemoveImage}
           cardId={openedTaskId}
         />
       )}

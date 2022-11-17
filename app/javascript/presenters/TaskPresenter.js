@@ -20,4 +20,5 @@ export default new PropTypesPresenter({
   transitions: PropTypes.array,
   author: PropTypes.number,
   assignee: PropTypes.number,
+  imageUrl: PropTypes.string,
 });

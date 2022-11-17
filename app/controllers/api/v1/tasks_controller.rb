@@ -1,6 +1,8 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
   def index
-    tasks = Task.includes(:author, :assignee).
+    tasks = Task.
+      includes(:author, :assignee).
+      with_attached_image.
       ransack(ransack_params).
       result.
       page(page).
@@ -70,7 +72,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event, :expired_at)
+    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event, :expired_at, :image)
   end
 
   def attachment_params

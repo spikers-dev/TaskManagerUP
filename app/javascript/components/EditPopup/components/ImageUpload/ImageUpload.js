@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import ReactCrop, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-import useStyles from './useStyles.js';
+import useStyles from './useStyles';
 
 function ImageUpload({ onUpload }) {
   const styles = useStyles();

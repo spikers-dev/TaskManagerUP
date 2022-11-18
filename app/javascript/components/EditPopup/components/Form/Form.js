@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { has } from 'ramda';
+import { has, isNil } from 'ramda';
 
 import TextField from '@material-ui/core/TextField';
 import UserSelect from 'components/UserSelect';
 import TaskPresenter from 'presenters/TaskPresenter';
+import Button from '@material-ui/core/Button';
+import ImageUpload from '../ImageUpload';
+import TasksRepository from 'repositories/TasksRepository';
 
 import useStyles from './useStyles';
 
@@ -12,6 +15,14 @@ function Form({ errors, onChange, task }) {
   const handleChangeTextField = (fieldName) => (event) => onChange({ ...task, [fieldName]: event.target.value });
   const handleChangeSelect = (fieldName) => (user) => onChange({ ...task, [fieldName]: user });
   const styles = useStyles();
+
+  const onAttachImage = (image) => {
+    TasksRepository.putFormData(task.id, image);
+  };
+
+  const onRemoveImage = () => {
+    TasksRepository.removeImage(task.id);
+  };
 
   return (
     <form className={styles.root}>
@@ -52,6 +63,20 @@ function Form({ errors, onChange, task }) {
         error={has('assignee', errors)}
         helperText={errors.assignee}
       />
+      {isNil(TaskPresenter.imageUrl(task)) ? (
+        <div className={styles.imageUploadContainer}>
+          <ImageUpload onUpload={onAttachImage} />
+        </div>
+      ) : (
+        <div className={styles.previewContainer}>
+          <a href={TaskPresenter.imageUrl(task)}>
+            <img className={styles.preview} src={TaskPresenter.imageUrl(task)} alt="Attachment" />
+          </a>
+          <Button variant="contained" size="small" color="primary" onClick={onRemoveImage}>
+            Remove image
+          </Button>
+        </div>
+      )}
     </form>
   );
 }

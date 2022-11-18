@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { isNil } from 'ramda';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -42,6 +43,15 @@ function Task({ task, onClick }) {
           <hr style={{ height: 5 }} />
           {TaskPresenter.expiredAt(task)}
         </Typography>
+        {isNil(TaskPresenter.imageUrl(task)) ? (
+          <div />
+        ) : (
+          <div className={styles.previewContainer}>
+            <a href={TaskPresenter.imageUrl(task)}>
+              <img className={styles.preview} src={TaskPresenter.imageUrl(task)} alt="Attachment" />
+            </a>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

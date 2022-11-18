@@ -72,7 +72,7 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event, :expired_at, :image)
+    params.require(:task).permit(:name, :description, :author_id, :assignee_id, :state_event, :expired_at)
   end
 
   def attachment_params

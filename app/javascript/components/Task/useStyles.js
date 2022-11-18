@@ -9,6 +9,12 @@ const useStyles = makeStyles(() => ({
     paddingTop: '15px',
     fontWeight: 'bolder',
   },
+
+  preview: {
+    width: '50%',
+    display: 'block',
+    margin: [[10, 'auto']],
+  },
 }));
 
 export default useStyles;

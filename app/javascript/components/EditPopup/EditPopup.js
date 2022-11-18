@@ -14,13 +14,11 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
-import TaskPresenter from 'presenters/TaskPresenter';
 import Form from './components/Form';
-import ImageUpload from './components/ImageUpload';
 
 import useStyles from './useStyles';
 
-function EditPopup({ cardId, onLoadCard, onCardUpdate, onCardDestroy, onClose, onAttachImage, onRemoveImage }) {
+function EditPopup({ cardId, onLoadCard, onCardUpdate, onCardDestroy, onClose }) {
   const [task, setTask] = useState(null);
   const [isSaving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
@@ -54,25 +52,6 @@ function EditPopup({ cardId, onLoadCard, onCardUpdate, onCardDestroy, onClose, o
     });
   };
 
-  const handleAttachImage = (attachment) => {
-    setSaving(true);
-
-    onAttachImage(task, attachment).catch((error) => {
-      setSaving(false);
-
-      alert(`Upload image Failed! Error: ${error.message}`); // eslint-disable-line no-alert
-    });
-  };
-
-  const handleRemoveImage = () => {
-    setSaving(true);
-
-    onRemoveImage(task).catch((error) => {
-      setSaving(false);
-
-      alert(`Remove image Failed! Error: ${error.message}`); // eslint-disable-line no-alert
-    });
-  };
   const isLoading = isNil(task);
 
   return (
@@ -93,21 +72,6 @@ function EditPopup({ cardId, onLoadCard, onCardUpdate, onCardDestroy, onClose, o
             </div>
           ) : (
             <Form errors={errors} onChange={setTask} task={task} />
-          )}
-
-          {isNil(TaskPresenter.imageUrl(task)) ? (
-            <div className={styles.imageUploadContainer}>
-              <ImageUpload onUpload={handleAttachImage} />
-            </div>
-          ) : (
-            <div className={styles.previewContainer}>
-              <a href={TaskPresenter.imageUrl(task)}>
-                <img className={styles.preview} src={TaskPresenter.imageUrl(task)} alt="Attachment" />
-              </a>
-              <Button variant="contained" size="small" color="primary" onClick={handleRemoveImage}>
-                Remove image
-              </Button>
-            </div>
           )}
         </CardContent>
         <CardActions className={styles.actions}>
@@ -141,8 +105,6 @@ EditPopup.propTypes = {
   onCardUpdate: PropTypes.func.isRequired,
   onCardDestroy: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onAttachImage: PropTypes.func.isRequired,
-  onRemoveImage: PropTypes.func.isRequired,
 };
 
 export default EditPopup;

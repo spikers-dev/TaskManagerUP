@@ -21,12 +21,6 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-
-  preview: {
-    width: '100%',
-    display: 'block',
-    margin: [[10, 'auto']],
-  },
 }));
 
 export default useStyles;

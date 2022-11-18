@@ -5,6 +5,12 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
   },
+
+  preview: {
+    width: '60%',
+    display: 'block',
+    margin: [[10, 'auto']],
+  },
 }));
 
 export default useStyles;

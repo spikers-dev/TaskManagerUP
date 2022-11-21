@@ -87,4 +87,5 @@ Rails.application.configure do
     Bullet.add_footer = true
     Bullet.skip_html_injection = false
   end
+  config.hosts << '.app.uffizzi.com'
 end
